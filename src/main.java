@@ -11,7 +11,7 @@ public class main {
         ge.initiateGame();
         ArrayList<ArrayList<Card>> board = deck.initBoard();
 
-        int[] scores = {0,0}; // Wins, loses
+        int[] scores = {0,0,0}; // Wins, loses, loops
         int result = -1, iterations = 0;
         Card[] cards = new Card[2];
 
@@ -45,7 +45,7 @@ public class main {
             } while ((result = deck.moveCards(cards)) == 0 && iterations < 1000);
 
             if(iterations >= 1000){
-                result = 2;
+                result = 3;
                 System.out.println(deck.getReserve());
                 System.out.println(deck.getReserveBackup());
                 System.out.println(deck.getHiddenCards());
@@ -82,5 +82,6 @@ public class main {
 
         System.out.println("Wins: " + scores[0]);
         System.out.println("Loses: " + scores[1]);
+        System.out.println("Loops: " + scores[2]);
     }
 }
