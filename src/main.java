@@ -46,6 +46,7 @@ public class main {
 
             if(iterations >= 1000){
                 result = 3;
+                System.out.println("----------------------------------");
                 System.out.println(deck.getReserve());
                 System.out.println(deck.getReserveBackup());
                 System.out.println(deck.getHiddenCards());
