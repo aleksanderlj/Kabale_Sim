@@ -22,7 +22,7 @@ public class Main {
         Card[] cards = new Card[2];
 
         for (int i = 0; i < A; i++) {
-            System.out.println(i * B);
+            System.out.println("Progess: " + i * B + "/" + A*B);
             for (int n = 0; n < B; n++) {
                 iterations = 0;
                 do {
