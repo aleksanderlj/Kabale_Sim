@@ -17,7 +17,6 @@ public class Main {
         ArrayList<ArrayList<Card>> startHiddenCards = new ArrayList<>();
         ArrayList<ArrayList<Card>> startBoard = new ArrayList<>();
 
-        int[] scores = {0, 0, 0}; // Wins, loses, loops
         int[] totalScores = {0, 0, 0};
         int result = -1, iterations = 0;
         Card[] cards = new Card[2];
