@@ -4,21 +4,26 @@ import sim.Deck;
 
 import java.util.ArrayList;
 
-public class main {
+public class Main {
     public static void main(String[] args) {
-        final int A = 100, B = 1000;
+        final int A = 100, B = 10000;
         Deck deck = new Deck();
         GameEngine ge = new GameEngine();
         ge.initiateGame();
         ArrayList<ArrayList<Card>> board = deck.initBoard();
 
-        int[] scores = {0,0,0}; // Wins, loses, loops
+        ArrayList<Card> startReserve = new ArrayList<>();
+        ArrayList<Card> startReserveBackup = new ArrayList<>();
+        ArrayList<ArrayList<Card>> startHiddenCards = new ArrayList<>();
+        ArrayList<ArrayList<Card>> startBoard = new ArrayList<>();
+
+        int[] scores = {0, 0, 0}; // Wins, loses, loops
         int[] totalScores = {0, 0, 0};
         int result = -1, iterations = 0;
         Card[] cards = new Card[2];
 
-        for(int i=0 ; i < A ; i++) {
-            System.out.println(i*B);
+        for (int i = 0; i < A; i++) {
+            System.out.println(i * B);
             for (int n = 0; n < B; n++) {
                 iterations = 0;
                 do {
@@ -47,6 +52,18 @@ public class main {
 
                 } while ((result = deck.moveCards(cards)) == 0 && iterations < 1000);
 
+                /*
+                if (result == 1) {
+                    System.out.println("----------------------------------");
+                    System.out.println(startReserve);
+                    System.out.println(startReserveBackup);
+                    System.out.println(startHiddenCards);
+
+                    System.out.println(startBoard);
+                }
+
+                 */
+
                 if (iterations >= 1000) {
                     result = 3;
                     System.out.println("----------------------------------");
@@ -64,36 +81,39 @@ public class main {
                     }
                 }
 
-                scores[result - 1]++;
-
-
-            /*
-            System.out.println(deck.getReserve());
-            System.out.println(deck.getReserveBackup());
-            System.out.println(deck.getHiddenCards());
-
-            System.out.println(board);
-
-             */
+                totalScores[result - 1]++;
 
                 deck = new Deck();
                 ge = new GameEngine();
                 ge.initiateGame();
                 board = deck.initBoard();
 
-                //System.out.println(B*i+n);
+                /*
+                startReserve = (ArrayList<Card>) deck.getReserve().clone();
+                startReserveBackup = (ArrayList<Card>) deck.getReserveBackup().clone();
+                startHiddenCards = copyArrayOfArray((ArrayList<ArrayList<Card>>) deck.getHiddenCards().clone());
+                startBoard = copyArrayOfArray((ArrayList<ArrayList<Card>>) board.clone());
 
+                 */
             }
-
-            totalScores[0] += scores[0];
-            totalScores[1] += scores[1];
-            totalScores[2] += scores[2];
-
-            scores = new int[]{0, 0, 0};
         }
 
-        System.out.println("Wins: " + totalScores[0]/(double)A);
-        System.out.println("Loses: " + totalScores[1]/(double)A);
-        System.out.println("Loops: " + totalScores[2]/(double)A);
+        System.out.println("Wins: " + totalScores[0]);
+        System.out.println("Loses: " + totalScores[1]);
+        System.out.println("Loops: " + totalScores[2]);
+    }
+
+    private static ArrayList<ArrayList<Card>> copyArrayOfArray(ArrayList<ArrayList<Card>> arr) {
+        ArrayList<ArrayList<Card>> temp = new ArrayList<ArrayList<Card>>();
+
+        for (int n = 0; n < arr.size(); n++) {
+            if (arr.get(n) == null) {
+                temp.add(null);
+            } else {
+                temp.add((ArrayList<Card>) arr.get(n).clone());
+            }
+        }
+
+        return temp;
     }
 }
